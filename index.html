@@ -1,124 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Library App</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f5f5f5;
-      margin: 0;
-      padding: 20px;
-    }
-    h1 {
-      text-align: center;
-    }
-    .container {
-      max-width: 900px;
-      margin: auto;
-    }
-    input, select, button {
-      padding: 10px;
-      margin: 5px;
-    }
-    .book-list {
-      margin-top: 20px;
-    }
-    .book-card {
-      background: white;
-      padding: 15px;
-      margin-bottom: 10px;
-      border-radius: 8px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-    }
-    .history {
-      margin-top: 40px;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <title>MyLibrary</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
-    <h1>📚 My Library</h1>
-    <div>
-      <input type="text" id="searchInput" placeholder="Search by title..." />
-      <select id="categoryFilter">
-        <option value="">All Categories</option>
-        <option value="Fiction">Fiction</option>
-        <option value="Non-fiction">Non-fiction</option>
-        <option value="Science">Science</option>
-        <option value="Biography">Biography</option>
-      </select>
-    </div>
+  <h1>📚 My Book Library</h1>
+  <input id="search" placeholder="Search books..." />
+  <div id="book-list"></div>
 
-    <div class="book-list" id="bookList"></div>
-
-    <div class="history">
-      <h2>📖 Borrowing History</h2>
-      <ul id="historyList"></ul>
-    </div>
-  </div>
-
-  <script>
-    const books = [
-      { title: "The Great Gatsby", category: "Fiction" },
-      { title: "A Brief History of Time", category: "Science" },
-      { title: "Steve Jobs", category: "Biography" },
-      { title: "The Selfish Gene", category: "Science" },
-      { title: "1984", category: "Fiction" },
-      { title: "Sapiens", category: "Non-fiction" }
-    ];
-
-    const history = [];
-
-    const bookList = document.getElementById('bookList');
-    const historyList = document.getElementById('historyList');
-    const searchInput = document.getElementById('searchInput');
-    const categoryFilter = document.getElementById('categoryFilter');
-
-    function displayBooks() {
-      const search = searchInput.value.toLowerCase();
-      const category = categoryFilter.value;
-      bookList.innerHTML = '';
-
-      books
-        .filter(book => 
-          book.title.toLowerCase().includes(search) &&
-          (category === '' || book.category === category)
-        )
-        .forEach((book, index) => {
-          const card = document.createElement('div');
-          card.className = 'book-card';
-          card.innerHTML = `
-            <strong>${book.title}</strong> <em>(${book.category})</em>
-            <button onclick="borrowBook(${index})">Borrow</button>
-          `;
-          bookList.appendChild(card);
-        });
-    }
-
-    function borrowBook(index) {
-      const book = books[index];
-      const date = new Date().toLocaleString();
-      history.push(`${book.title} borrowed on ${date}`);
-      updateHistory();
-      alert(`You borrowed "${book.title}"`);
-    }
-
-    function updateHistory() {
-      historyList.innerHTML = '';
-      history.forEach(entry => {
-        const li = document.createElement('li');
-        li.textContent = entry;
-        historyList.appendChild(li);
-      });
-    }
-
-    searchInput.addEventListener('input', displayBooks);
-    categoryFilter.addEventListener('change', displayBooks);
-
-    // Initial display
-    displayBooks();
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>
+
